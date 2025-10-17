@@ -2,13 +2,13 @@ import pygame
 
 pygame.init()
 
-# setting up game window
+# setting up  window for ball
 screen_width=500
 screen_height=500
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Bouncing Ball")
 
-# colors
+# colors adding
 backgorund = (0, 0, 0)
 object_color = (153, 102, 0)
 radius = 20
@@ -21,27 +21,30 @@ ball_1y = screen_height//1.05
 ball_2x = screen_width//3
 ball_2y = screen_height//8
 
-# velocity/speed of ball to move in all directions
-ball_1x_speed = 5
-ball_1y_speed = 5
-ball_2x_speed = 2
-ball_2y_speed = 2
+# speed of ball to move in all directions
+ball_1x_speed = 200
+ball_1y_speed = 200
+ball_2x_speed = 100
+ball_2y_speed = 100
 
 # game loop
 running=True
 clock = pygame.time.Clock()
-fps=60
+fps=120
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running=False
 
+    # control frme rate
+    delta_time = clock.tick(fps)/1000.0
+
 
     # keep updating the position until closed
-    ball_1x+=ball_1x_speed
-    ball_1y+=ball_1y_speed
-    ball_2x+=ball_2x_speed
-    ball_2y+=ball_2y_speed
+    ball_1x+=ball_1x_speed * delta_time
+    ball_1y+=ball_1y_speed * delta_time
+    ball_2x+=ball_2x_speed * delta_time
+    ball_2y+=ball_2y_speed * delta_time
 
     # ÷detect the boundries
     if ball_1x + ball_radius > screen_width or ball_1x - ball_radius<0:
@@ -54,6 +57,12 @@ while running:
     if ball_2y + ball_radius > screen_height or ball_2y - ball_radius<0:
         ball_2y_speed = -ball_2y_speed
 
+    # ball_radius+=0.01
+    ball_1x_speed+=10
+    ball_1y_speed+=10
+    ball_2x_speed+=10
+    ball_2y_speed+=10
+
 
     screen.fill(backgorund)
 
@@ -63,7 +72,6 @@ while running:
 
     pygame.display.flip()
 
-    # control frme rate
-    clock.tick(fps)
+    
 
 pygame.quit()
